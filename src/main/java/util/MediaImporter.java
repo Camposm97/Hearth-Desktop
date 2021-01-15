@@ -20,6 +20,10 @@ public class MediaImporter {
         importMedia();
     }
 
+    /**
+     * We should for files that have the following extensions:
+     * mp4, mp3,
+     */
     public static void importMedia() {
         final String HOME = "user.home";
         String path = System.getProperty(HOME);
@@ -28,8 +32,10 @@ public class MediaImporter {
         System.out.println();
         try {
             List<File> fileList = Arrays.asList(Objects.requireNonNull(fileHome.listFiles((file, name) -> !name.startsWith("."))));
-
             fileList.forEach(file -> {
+                if (file.isDirectory()) {
+                    // scan this directory for files and more directories for media files.
+                }
                 System.out.println(file);
             });
         } catch (Exception e) {
