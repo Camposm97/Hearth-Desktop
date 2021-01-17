@@ -26,7 +26,7 @@ import util.FXUtil;
  * If I can resolve this issue then I can have buttons for displaying only videos or music (search online).
  *
  */
-public class Main extends Application {
+public class Hearth extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXUtil.loadFXML("ui/Main.fxml");
