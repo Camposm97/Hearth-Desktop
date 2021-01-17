@@ -1,11 +1,27 @@
 import org.junit.Test;
 import util.MediaImporter;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 public class MediaImporterTest {
+    @Test
+    public void testImportMedia() {
+        String home = System.getProperty("user.home");
+        File file = new File(home);
+        try {
+            Path path = Paths.get(home);
+            System.out.println(path);
+//            Files.walk(Paths.get(home)).filter(Files::isRegularFile).forEach(System.out::println);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void testIsSupportedFormat() {
         String path1 = "Hello.m4a";

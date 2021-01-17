@@ -2,6 +2,7 @@ package util;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,15 +18,15 @@ public class MediaImporter {
      *
      * @param src
      */
-    public static void importMedia(String src) {
+    public static List<String> importMedia(String src) {
+        List<String> list = new LinkedList<>();
         File file = new File(src);
         if (file.exists()) {
             if (file.isDirectory()) {
-                // scan for files and directories
-            } else if (file.isFile()) {
-                // check if is a supported file
+                File[] files = file.listFiles((f, name) -> !name.startsWith("."));
             }
         }
+        return list;
     }
 
     /**
@@ -38,7 +39,7 @@ public class MediaImporter {
         System.out.println("HOME -> " + fileHome);
         System.out.println();
         try {
-            List<File> fileList = Arrays.asList(Objects.requireNonNull(fileHome.listFiles((file, name) -> !name.startsWith("."))));
+            List<File> fileList = Arrays.asList(Objects.requireNonNull(fileHome.listFiles((f, name) -> !name.startsWith("."))));
             fileList.forEach(file -> {
                 if (file.isDirectory()) {
                     // scan this directory for files and more directories for media files.
