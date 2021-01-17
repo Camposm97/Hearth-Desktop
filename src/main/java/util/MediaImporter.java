@@ -12,16 +12,6 @@ import java.util.Objects;
  * m4a, m4v, mp4, mp3, wav, mpeg4, jpg, jpeg, png, bmp, gif
  */
 public class MediaImporter {
-    /*
-     * Purpose of this main method is to test methods in MediaImporter
-     * I will probably make a tests later on,
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-//        autoImportMedia();
-    }
-
     /**
      * Starts scanning for media files from a given source
      *
