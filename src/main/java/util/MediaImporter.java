@@ -2,9 +2,9 @@ package util;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeSet;
 
 /**
  * Purpose of this class is that it will prompt the user if they want the program to
@@ -16,46 +16,55 @@ public class MediaImporter {
     /**
      * Starts scanning for media files from a given source
      *
-     * @param src
+     * @param fileSrc
      */
-    public static List<String> importMedia(String src) {
-        List<String> list = new LinkedList<>();
-        File file = new File(src);
-        if (file.exists()) {
-            if (file.isDirectory()) {
-                File[] files = file.listFiles((f, name) -> !name.startsWith("."));
+    public static TreeSet<String> importMedia(File fileSrc) {
+        TreeSet<String> treeSet = new TreeSet<>();
+        if (fileSrc.exists()) {
+            if (fileSrc.isDirectory()) {
+                File[] files = fileSrc.listFiles((f, name) -> !name.startsWith("."));
+                if (files != null) {
+                    Arrays.stream(files).forEach(f -> {
+                        treeSet.addAll(importMedia(f));
+                    });
+                }
+            } else if (fileSrc.isFile()) {
+                if (isSupportedFormat(fileSrc.getPath())) {
+                    treeSet.add(fileSrc.getPath());
+                }
             }
         }
-        return list;
+        return treeSet;
     }
 
     /**
      * Starts scanning for media files from the user's root directory.
      */
-    public static void autoImportMedia() {
+    public static TreeSet<String> autoImportMedia() {
         final String HOME = "user.home";
         String path = System.getProperty(HOME);
         File fileHome = new File(path);
+        TreeSet<String> treeSet = new TreeSet<>();
         System.out.println("HOME -> " + fileHome);
         System.out.println();
         try {
-            List<File> fileList = Arrays.asList(Objects.requireNonNull(fileHome.listFiles((f, name) -> !name.startsWith("."))));
+            List<File> fileList = Arrays.asList(Objects.requireNonNull(fileHome.listFiles((f, name) -> !name.startsWith(".") || name.equals("AppData"))));
             fileList.forEach(file -> {
                 if (file.isDirectory()) {
                     // scan this directory for files and more directories for media files.
-                }
-                if (file.isFile()) {
-
+                    importMedia(file);
+                } else if (file.isFile()) {
+                    if (isSupportedFormat(file.getPath())) {
+                        treeSet.add(file.getPath());
+                    }
                 }
                 System.out.println(file);
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void scanFiles() {
-
+        System.out.println();
+        return treeSet;
     }
 
     public static boolean isSupportedFormat(String path) {

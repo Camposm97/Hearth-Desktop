@@ -1,25 +1,28 @@
 import org.junit.Test;
 import util.MediaImporter;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+import java.util.TreeSet;
 
 import static org.junit.Assert.assertTrue;
 
 public class MediaImporterTest {
     @Test
     public void testImportMedia() {
-        String home = System.getProperty("user.home");
-        File file = new File(home);
-        try {
-            Path path = Paths.get(home);
-            System.out.println(path);
+        TreeSet<String> treeSet = MediaImporter.autoImportMedia();
+        treeSet.forEach(s -> {
+            System.out.println(s);
+        });
+        System.out.println("Done");
+//        String home = System.getProperty("user.home");
+//        try {
+//            Path path = Paths.get(home);
+//            System.out.println(path);
+//
 //            Files.walk(Paths.get(home)).filter(Files::isRegularFile).forEach(System.out::println);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test
