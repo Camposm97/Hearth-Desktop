@@ -52,7 +52,7 @@ public class MediaImporter {
             fileList.forEach(file -> {
                 if (file.isDirectory()) {
                     // scan this directory for files and more directories for media files.
-                    importMedia(file);
+                    treeSet.addAll(importMedia(file));
                 } else if (file.isFile()) {
                     if (isSupportedFormat(file.getPath())) {
                         treeSet.add(file.getPath());
@@ -68,6 +68,7 @@ public class MediaImporter {
     }
 
     public static boolean isSupportedFormat(String path) {
+        path = path.toLowerCase();
         return path.endsWith(".m4a") || path.endsWith(".m4v") || path.endsWith(".mp4") || path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".mpeg4") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".bmp") || path.endsWith(".gif");
     }
 }
