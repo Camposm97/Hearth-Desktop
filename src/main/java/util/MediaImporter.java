@@ -48,9 +48,9 @@ public class MediaImporter {
         System.out.println("HOME -> " + fileHome);
         System.out.println();
         try {
-            List<File> fileList = Arrays.asList(Objects.requireNonNull(fileHome.listFiles((f, name) -> !name.startsWith(".") || name.equals("AppData"))));
+            List<File> fileList = Arrays.asList(Objects.requireNonNull(fileHome.listFiles((f, name) -> !name.startsWith("."))));
             fileList.forEach(file -> {
-                if (file.isDirectory()) {
+                if (file.isDirectory() && !file.getPath().contains("AppData")) {
                     // scan this directory for files and more directories for media files.
                     treeSet.addAll(importMedia(file));
                 } else if (file.isFile()) {
