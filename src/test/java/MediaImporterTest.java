@@ -8,14 +8,14 @@ import static org.junit.Assert.assertTrue;
 
 public class MediaImporterTest {
     @Test
-    public void testPrintSystemProperties() {
+    public void testSystemProperties() {
         System.getProperties().list(System.out);
     }
 
     @Test
-    public void testImportMedia() {
-        System.out.println("Found Media:");
+    public void testAutoImportMedia() {
         TreeSet<String> treeSet = MediaImporter.autoImportMedia();
+        System.out.println("Found Media:");
         treeSet.forEach(s -> {
             System.out.println(s);
         });
